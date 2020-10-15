@@ -1,0 +1,7 @@
+.DS_Store
+.gitignore
+.gradle/
+.idea/
+HELP.md
+build/
+neotech.iml
