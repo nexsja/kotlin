@@ -6,20 +6,13 @@ import org.springframework.stereotype.Component
 
 @Component
 class CountryCodeRepository : CountryCodeRepository {
-    private var storage: MutableList<CountryCode> = mutableListOf()
-
-    override fun store(entity: CountryCode) {
-        if (!storage.contains(entity)) {
-            storage.add(entity)
-        }
-    }
+    private var storage: List<CountryCode> = emptyList()
 
     override fun store(entities: List<CountryCode>) {
-        entities.forEach { store(it) }
+        storage = entities
     }
 
     override fun findCountryByPhone(number: String): CountryCode? {
         return storage.find { c -> number.startsWith(c.code) }
     }
-
 }
