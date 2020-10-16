@@ -1,4 +1,4 @@
-package me.alexn.neotech.presentation.exception
+package me.alexn.neotech.presentation.error
 
 import me.alexn.neotech.presentation.dto.ApiResponse
 import me.alexn.neotech.presentation.dto.toApiErrorResponse
@@ -9,14 +9,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import javax.validation.ConstraintViolationException
 
-open class AppException(val httpStatus: HttpStatus, message: String?) : RuntimeException(message)
-
-class NotFoundException : AppException(HttpStatus.NOT_FOUND, "Record not found")
-
-data class AppError(val statusText: String)
-
-fun Throwable.toAppError(): AppError = AppError(message ?: "Internal Server Error")
-
 private val logger = LoggerFactory.getLogger(ExceptionHandler::class.java)
 
 @ControllerAdvice
@@ -25,7 +17,7 @@ class ExceptionHandler {
     @ExceptionHandler(AppException::class)
     fun onNotFoundException(e: AppException): ResponseEntity<ApiResponse<AppError>> =
         ResponseEntity.status(e.httpStatus).body(
-                e.toAppError().toApiErrorResponse()
+            e.toAppError().toApiErrorResponse()
         )
 
     @ExceptionHandler(ConstraintViolationException::class)

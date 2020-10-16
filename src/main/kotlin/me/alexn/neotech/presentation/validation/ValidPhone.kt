@@ -1,4 +1,4 @@
-package me.alexn.neotech.presentation.annotation
+package me.alexn.neotech.presentation.validation
 
 import javax.validation.Constraint
 import javax.validation.Payload

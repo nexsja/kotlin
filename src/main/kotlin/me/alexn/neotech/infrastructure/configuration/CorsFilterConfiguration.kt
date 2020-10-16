@@ -1,35 +1,15 @@
-package me.alexn.neotech
+package me.alexn.neotech.infrastructure.configuration
 
-import me.alexn.neotech.application.Scrapper
-import me.alexn.neotech.application.WikiScrapper
-import me.alexn.neotech.infrastructure.persistance.local.CountryCodeRepository
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Profile
 import org.springframework.core.Ordered
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
 
 @Configuration
-class AppConfig(
-    @Value("\${scrapper.url}")
-    val wikiUrl: String
-) {
-
-    @Bean
-    @Profile("prod")
-    fun wikiScrapper(repository: CountryCodeRepository): Scrapper {
-        return WikiScrapper(wikiUrl, repository)
-    }
-
-    @Bean
-    @Profile("test")
-    fun testScrapper() {
-
-    }
+class CorsFilterConfiguration {
 
     @Bean
     fun simpleCorsFilter(): FilterRegistrationBean<*> {
